@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <utility>
 
 template <typename T>
 std::pair<std::size_t, std::size_t> findMinMaxIndices(const std::vector<T>& v)

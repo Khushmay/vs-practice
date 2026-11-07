@@ -2,56 +2,63 @@
 #include <vector>
 #include <utility>
 
-template <typename T>
-std::pair<std::size_t, std::size_t> findMinMaxIndices(const std::vector<T>& v)
+template<typename T>
+std::pair<std::size_t, std::size_t> findMinAndMax(const std::vector<T>& arr)
 {
-    std::size_t minIndex { 0 };
-    std::size_t maxIndex { 0 };
+    std::size_t min{ 0 };
+    std::size_t max{ 0 };
 
-    for (std::size_t index { 1 }; index < v.size(); ++index)
+    for (std::size_t i{ 1 }; i < arr.size(); ++i)
     {
-        if (v[index] < v[minIndex])
-            minIndex = index;
-        if (v[index] > v[maxIndex])
-            maxIndex = index;
+        if (arr[i] < arr[min])
+        {
+            min = i;
+        }
+        if (arr[i] > arr[max])
+        {
+            max = i;
+        }
     }
 
-    return { minIndex, maxIndex };
+    return { min, max };
 }
 
-template <typename T>
-void printArray(const std::vector<T>& v)
+template<typename T>
+void printArray(const std::vector<T>& arr)
 {
-    bool comma { false };
     std::cout << "With array ( ";
-    for (const auto& e: v)
+    for (std::size_t i{ 0 }; i < arr.size(); ++i)
     {
-        if (comma)
+        std::cout << arr[i];
+        if (i + 1 < arr.size())
             std::cout << ", ";
-
-        std::cout << e;
-        comma = true;
+        else
+            std::cout << " ";
     }
-    std::cout << " ):\n";
+    std::cout << ")\n";
+}
+
+template<typename T>
+void printMaxAndMin(const std::vector<T>& arr)
+{
+    std::pair minAndMax{ findMinAndMax(arr) };
+    
+    std::cout << "The min element has index " << minAndMax.first << " and value " << arr[minAndMax.first] << '\n';
+
+    std::cout << "The max element has index " << minAndMax.second<< " and value " << arr[minAndMax.second] << '\n';
 }
 
 int main()
 {
     std::vector v1 { 3, 8, 2, 5, 7, 8, 3 };
     printArray(v1);
-
-    auto m1 { findMinMaxIndices(v1) };
-    std::cout << "The min element has index " << m1.first << " and value " << v1[m1.first] << '\n';
-    std::cout << "The max element has index " << m1.second << " and value " << v1[m1.second] << '\n';
-
-    std::cout << '\n';
+    printMaxAndMin(v1);
 
     std::vector v2 { 5.5, 2.7, 3.3, 7.6, 1.2, 8.8, 6.6 };
     printArray(v2);
-
-    auto m2 { findMinMaxIndices(v2) };
-    std::cout << "The min element has index " << m2.first << " and value " << v2[m2.first] << '\n';
-    std::cout << "The max element has index " << m2.second << " and value " << v2[m2.second] << '\n';
+    printMaxAndMin(v2);
 
     return 0;
 }
+
+
